@@ -1,5 +1,9 @@
 import logging
 import re
+import difflib
+from datetime import datetime
+
+from . import MONTHS
 
 log = logging.getLogger(__name__)
 
@@ -9,7 +13,7 @@ def parse(txt):
     locality = parse_locality(txt)
     from_locality = locality['from_locality']
     to_locality = locality['to_locality']
-    date = None
+    date = parse_date(txt)
     body = None
 
     disected = {
@@ -52,3 +56,18 @@ def parse_locality(txt):
         return {'from_locality': from_locality, 'to_locality': to_locality}
     except Exception as e:
         log.error(f'Failed to parse locality from text. Exception: {e}')
+
+
+def parse_date(txt):
+    try:
+        date = txt.split('\n')[1].split('-')[-1].replace(',', ' ').split()
+        month = difflib.get_close_matches(date[1], MONTHS, n=1)[0]
+        day = date[2]
+        year = date[3]
+
+        parsed_date = datetime.strptime(f'{month} {day} {year}', '%B %d %Y')
+        formated_date = parsed_date.date().isoformat()
+
+        return formated_date
+    except Exception as e:
+        log.error(f'Failed to parse date from text. Exception: {e}')

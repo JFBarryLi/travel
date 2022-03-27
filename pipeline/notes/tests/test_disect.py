@@ -1,5 +1,6 @@
 from . import examples
-from ..disect import parse, parse_day, parse_locality
+from ..disect import parse, parse_day, parse_locality, \
+    parse_date
 
 
 def test_parse():
@@ -53,3 +54,39 @@ def test_parse_locality_dash_in_locality():
     locality = parse_locality(exp)
     assert locality['from_locality'] == 'San Jose'
     assert locality['to_locality'] == 'Ivano-Frankivsk'
+
+
+def test_parse_date_standard():
+    exp = examples['1_std.txt']
+    date = parse_date(exp)
+    assert date == '2022-01-03'
+
+
+def test_parse_date_bad_weekday():
+    exp = examples['4_bad_date.txt']
+    date = parse_date(exp)
+    assert date == '2022-01-06'
+
+
+def test_parse_date_bad_month():
+    exp = examples['5_bad_date.txt']
+    date = parse_date(exp)
+    assert date == '2022-01-07'
+
+
+def test_parse_date_bad_date_spacing():
+    exp = examples['6_bad_date.txt']
+    date = parse_date(exp)
+    assert date == '2022-01-08'
+
+
+def test_parse_date_bad_date_mismatch():
+    exp = examples['10_date_mismatch.txt']
+    date = parse_date(exp)
+    assert date == '2022-01-12'
+
+
+def test_parse_date_bad_date_spacing_2():
+    exp = examples['8_bad_spacing.txt']
+    date = parse_date(exp)
+    assert date == '2022-01-10'
