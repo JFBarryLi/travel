@@ -1,3 +1,2 @@
-include MANIFEST.in
-include *.py
-include *.txt
+global-include *.py
+global-include *.txt

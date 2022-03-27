@@ -1,8 +1,10 @@
-import os
+from importlib import resources
+
+import pipeline.notes.tests.data as data
 
 examples = {}
 
-for filename in os.listdir('./examples'):
-    with open(os.path.join('./examples', filename), 'r') as f:
-        txt = f.read()
-        examples[filename] = txt
+for file_name in resources.contents(data):
+    if file_name.endswith('.txt'):
+        txt = resources.read_text(data, file_name)
+        examples[file_name] = txt
