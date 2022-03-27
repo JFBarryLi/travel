@@ -14,7 +14,7 @@ def parse(txt):
     from_locality = locality['from_locality']
     to_locality = locality['to_locality']
     date = parse_date(txt)
-    body = None
+    body = parse_body(txt)
 
     disected = {
         'day': day,
@@ -71,3 +71,11 @@ def parse_date(txt):
         return formated_date
     except Exception as e:
         log.error(f'Failed to parse date from text. Exception: {e}')
+
+
+def parse_body(txt):
+    try:
+        body = ''.join(txt.split('\n')[2:])
+        return body
+    except Exception as e:
+        log.error(f'Failed to parse body from text. Exception: {e}')
