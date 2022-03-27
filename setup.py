@@ -7,5 +7,6 @@ setup(
     install_requires=[
         'pytest==7.1.1',
         'rich==12.0.1',
+        'nltk==3.7',
     ],
 )
