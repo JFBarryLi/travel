@@ -1,4 +1,5 @@
-from ..nlp import process, word_count, char_count, sent_count
+from ..nlp import process, word_count, char_count, sent_count,\
+    predict_sentiment
 
 STD_BODY = 'This is a standard body of text. It has several sentences, and some punctuations. What am I? That was a simple question. The answer should be simple as well! I am just a body of text.'
 
@@ -8,6 +9,8 @@ def test_process():
     assert output['word_count'] == 36
     assert output['char_count'] == 183
     assert output['sent_count'] == 6
+    assert output['sentiment']['POSITIVE'] == 1
+    assert output['sentiment']['NEGATIVE'] == 5
 
 
 def test_word_count():
@@ -23,3 +26,9 @@ def test_char_count():
 def test_sent_count():
     count = sent_count(STD_BODY)
     assert count == 6
+
+
+def test_predict_sentiment():
+    result = predict_sentiment(STD_BODY)
+    assert result['POSITIVE'] == 1
+    assert result['NEGATIVE'] == 5
