@@ -59,12 +59,12 @@ def parse_day(key):
     return int(day)
 
 
-def unprocessed_notes(objs, full_trip_name):
+def unprocessed_notes(objs, full_trip_name, process_all=False):
     latest_processed_day = get_latest_day(full_trip_name)
 
     if latest_processed_day > 0:
-        latest_processed_obj = filter(
-            lambda obj: parse_day(obj['Key']) == latest_processed_day, objs)[0]
+        latest_processed_obj = list(filter(
+            lambda obj: parse_day(obj['Key']) == latest_processed_day, objs))[0]
         latest_processed_date = latest_processed_obj['LastModified']
     else:
         latest_processed_date = datetime.datetime(1, 1, 1)
@@ -73,7 +73,9 @@ def unprocessed_notes(objs, full_trip_name):
     for obj in objs:
         day = parse_day(obj['Key'])
         last_modified_date = obj['LastModified']
-        if day > latest_processed_day or last_modified_date > latest_processed_date:
+        if day > latest_processed_day or \
+                last_modified_date > latest_processed_date or \
+                process_all:
             unprocessed.append(obj['Key'])
 
     return unprocessed
