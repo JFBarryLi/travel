@@ -1,5 +1,5 @@
 run:
-	travel
+	./scripts/notes_pipeline
 
 test:
 	pytest -vv
