@@ -5,10 +5,10 @@ WORKDIR /travel
 COPY requirements.txt requirements.txt
 
 RUN apt-get -y update \
-    && pip install -r requirements.txt
+    && pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN pip install .
+RUN pip install --no-cache-dir .
 
 ENTRYPOINT [ "./entrypoint.sh"]
