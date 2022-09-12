@@ -6,7 +6,8 @@ from botocore.exceptions import ClientError
 log = logging.getLogger(__name__)
 
 dynamodb = boto3.resource('dynamodb')
-travel_table = dynamodb.Table('TravelLog')
+DYNAMO_TABLE = os.environ['TRAVEL_TABLE']
+travel_table = dynamodb.Table(DYNAMO_TABLE)
 
 
 def put_log(processed_log):
