@@ -1,14 +1,59 @@
 import re
 import logging
 
-from flair.data import Sentence
-from flair.models import TextClassifier
 import nltk
+from transformers import (
+    RobertaTokenizerFast,
+    TFRobertaForSequenceClassification,
+    pipeline,
+)
 
-classifier = TextClassifier.load('en-sentiment')
 nltk.download('punkt')
 
+tokenizer = RobertaTokenizerFast.from_pretrained(
+    "arpanghoshal/EmoRoBERTa"
+)
+model = TFRobertaForSequenceClassification.from_pretrained(
+    "arpanghoshal/EmoRoBERTa"
+)
+emotion = pipeline(
+    'sentiment-analysis',
+    model='arpanghoshal/EmoRoBERTa',
+    return_all_scores=True,
+)
+
 log = logging.getLogger(__name__)
+
+EMOJI_MAP = {
+    'admiration': '😲',
+    'amusement': '😂',
+    'anger': '😡',
+    'annoyance': '🙄',
+    'approval': '👍',
+    'caring': '🤗',
+    'confusion': '😕',
+    'curiosity': '🤔',
+    'desire': '😍',
+    'disappointment': '😞',
+    'disapproval': '👎',
+    'disgust': '🤮',
+    'embarrassment': '😳',
+    'excitement': '🤩',
+    'fear': '😨',
+    'gratitude': '🙏',
+    'grief': '😢',
+    'joy': '😃',
+    'love': '❤️',
+    'nervousness': '😬',
+    'optimism': '🌞',
+    'pride': '😌',
+    'realization': '💡',
+    'relief': '😅',
+    'remorse': '😔',
+    'sadness': '😞',
+    'surprise': '😲',
+    'neutral': '😐',
+}
 
 
 def process(body):
@@ -54,17 +99,14 @@ def sent_count(body):
 
 def predict_sentiment(body):
     try:
-        sentences = nltk.sent_tokenize(body)
-        result = {'POSITIVE': 0, 'NEGATIVE': 0}
+        emotion_labels = emotion(body)
+        emotion_labels[0].sort(key=lambda i: i['score'], reverse=True)
+        result = emotion_labels[0][:3]
 
-        for s in sentences:
-            sentence = Sentence(s)
-            classifier.predict(sentence)
-            labels = sentence.get_label_names()
-            if 'POSITIVE' in labels:
-                result['POSITIVE'] += 1
-            elif 'NEGATIVE' in labels:
-                result['NEGATIVE'] += 1
+        for item in result:
+            item['emoji'] = EMOJI_MAP[item['label']]
+
+        log.info(f'Successfully predicted sentiment: {result}')
 
         return result
     except Exception as e:
