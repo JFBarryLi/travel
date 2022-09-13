@@ -53,6 +53,9 @@ class DiscordHandler(logging.Handler):
     def emit(self, record):
         try:
             msg = self.format(record)
-            self.write_to_discord(f'```{msg}```')
+            if record.levelno > 20:
+                self.write_to_discord(f'```fix\n{msg}\n```')
+            else:
+                self.write_to_discord(f'```{msg}```')
         except Exception:
             self.handleError(record)
