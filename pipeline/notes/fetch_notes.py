@@ -60,6 +60,10 @@ def parse_day(key):
 
 
 def unprocessed_notes(objs, full_trip_name, process_all=False):
+    # All notes with day greater than the day of the latest entry
+    # on the dynamodb table, or with LastModified date greater than
+    # the LastModified date on the latest entry are to be processed.
+
     latest_processed_day = get_latest_day(full_trip_name)
 
     if latest_processed_day > 0:
