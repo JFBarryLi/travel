@@ -1,4 +1,6 @@
+import os
 from decimal import Decimal
+
 import boto3
 import logging
 from botocore.exceptions import ClientError
@@ -32,5 +34,7 @@ def put_log(processed_log):
         )
     except ClientError as e:
         log.error(e.response['Error']['Message'])
+    except Exception as e:
+        log.error(f'Exception: {e}')
     else:
         return response
