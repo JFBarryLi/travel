@@ -1,5 +1,6 @@
 import re
 import logging
+from decimal import Decimal
 
 import nltk
 from transformers import (
@@ -105,6 +106,7 @@ def predict_sentiment(body):
 
         for item in result:
             item['emoji'] = EMOJI_MAP[item['label']]
+            item['score'] = Decimal(item['score'])
 
         log.info(f'Successfully predicted sentiment: {result}')
 
