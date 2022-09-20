@@ -32,7 +32,7 @@
     "volumes": [],
     "memory": "1024",
     "cpu": "2048",
-    "executionRoleArn": "",
+    "executionRoleArn": "TASK_ROLE_ARN",
     "family": "travel-data-pipeline",
     "networkMode": "awsvpc",
     "taskRoleArn": "TASK_ROLE_ARN",
