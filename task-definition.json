@@ -1,0 +1,28 @@
+{
+    "requiresCompatibilities": ["FARGATE"],
+    "inferenceAccelerators": [],
+    "containerDefinitions": [
+      {
+        "cpu": 1024,
+        "memory": 2048,
+        "name": "travel-data-pipeline",
+        "essential": true,
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "options": {
+            "awslogs-group": "AWSLOGS_GROUP_NAME",
+            "awslogs-region": "AWS_REGION",
+            "awslogs-stream-prefix": "travel-data-pipeline"
+          }
+        }
+      }
+    ],
+    "volumes": [],
+    "memory": 1024,
+    "cpu": 2048,
+    "executionRoleArn": "",
+    "family": "travel-data-pipeline",
+    "networkMode": "awsvpc",
+    "taskRoleArn": "TASK_ROLE_ARN",
+    "placementConstraints": []
+}
