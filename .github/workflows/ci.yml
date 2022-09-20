@@ -52,10 +52,16 @@ jobs:
         AWS_REGION: ${{ secrets.AWS_REGION }}
         AWSLOGS_GROUP_NAME: ${{ secrets.AWSLOGS_GROUP_NAME }}
         TASK_ROLE_ARN: ${{ secrets.TASK_ROLE_ARN }}
+        ALERT_WEBHOOK: ${{ secrets.ALERT_WEBHOOK }}
+        TRAVEL_TABLE: ${{ secrets.TRAVEL_TABLE }}
+        NOTES_BUCKET_NAME: ${{ secrets.NOTES_BUCKET_NAME }}
       run: |
         sed -i "s|AWS_REGION|${AWS_REGION}|g" ${TASK_DEF}
         sed -i "s|AWSLOGS_GROUP_NAME|${AWSLOGS_GROUP_NAME}|g" ${TASK_DEF}
         sed -i "s|TASK_ROLE_ARN|${TASK_ROLE_ARN}|g" ${TASK_DEF}
+        sed -i "s|ALERT_WEBHOOK|${ALERT_WEBHOOK}|g" ${TASK_DEF}
+        sed -i "s|TRAVEL_TABLE|${TRAVEL_TABLE}|g" ${TASK_DEF}
+        sed -i "s|NOTES_BUCKET_NAME|${NOTES_BUCKET_NAME}|g" ${TASK_DEF}
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1

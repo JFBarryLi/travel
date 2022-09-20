@@ -12,7 +12,21 @@
             "awslogs-region": "AWS_REGION",
             "awslogs-stream-prefix": "travel-data-pipeline"
           }
-        }
+        },
+        "environment": [
+          {
+            "name": "ALERT_WEBHOOK",
+            "value": "ALERT_WEBHOOK"
+          },
+          {
+            "name": "TRAVEL_TABLE",
+            "value": "TRAVEL_TABLE"
+          },
+          {
+            "name": "NOTES_BUCKET_NAME",
+            "value": "NOTES_BUCKET_NAME"
+          }
+        ]
       }
     ],
     "volumes": [],
