@@ -14,5 +14,6 @@ setup(
         'transformers==4.21.2',
         'boto3==1.21.32',
         'geopy==2.2.0',
+        'python-json-logger==2.0.4',
     ],
 )
