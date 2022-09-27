@@ -4,7 +4,7 @@ from rich.logging import RichHandler
 from pythonjsonlogger import jsonlogger
 from .utils.discord_handler import DiscordHandler
 
-fargate = os.getenv('AWS_ECS_FARGATE')
+fargate = os.getenv('ECS_CONTAINER_METADATA_URI_V4')
 
 discord_webhook = os.environ['ALERT_WEBHOOK']
 
