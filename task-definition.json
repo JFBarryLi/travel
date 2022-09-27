@@ -8,23 +8,23 @@
         "logConfiguration": {
           "logDriver": "awslogs",
           "options": {
-            "awslogs-group": "AWSLOGS_GROUP_NAME",
-            "awslogs-region": "AWS_REGION",
+            "awslogs-group": "__AWSLOGS_GROUP_NAME__",
+            "awslogs-region": "__AWS_REGION__",
             "awslogs-stream-prefix": "travel-data-pipeline"
           }
         },
         "environment": [
           {
             "name": "ALERT_WEBHOOK",
-            "value": "ALERT_WEBHOOK"
+            "value": "__ALERT_WEBHOOK__"
           },
           {
             "name": "TRAVEL_TABLE",
-            "value": "TRAVEL_TABLE"
+            "value": "__TRAVEL_TABLE__"
           },
           {
             "name": "NOTES_BUCKET_NAME",
-            "value": "NOTES_BUCKET_NAME"
+            "value": "__NOTES_BUCKET_NAME__"
           }
         ]
       }
@@ -32,9 +32,9 @@
     "volumes": [],
     "memory": "2048",
     "cpu": "1024",
-    "executionRoleArn": "TASK_ROLE_ARN",
+    "executionRoleArn": "__TASK_ROLE_ARN__",
     "family": "travel-data-pipeline",
     "networkMode": "awsvpc",
-    "taskRoleArn": "TASK_ROLE_ARN",
+    "taskRoleArn": "__TASK_ROLE_ARN__",
     "placementConstraints": []
 }
