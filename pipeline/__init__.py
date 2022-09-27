@@ -8,19 +8,21 @@ fargate = os.getenv('AWS_ECS_FARGATE')
 
 discord_webhook = os.environ['ALERT_WEBHOOK']
 
-format = logging.Formatter('%(levelname)s | %(name)s | %(message)s')
+format = '%(levelname)s | %(name)s | %(message)s | %(lineno)d'
+
+logging_formatter = logging.Formatter(format)
 
 discord_handler = DiscordHandler(discord_webhook, 'notes-pipeline-alert-agent')
-discord_handler.setFormatter(format)
+discord_handler.setFormatter(logging_formatter)
 discord_handler.setLevel(logging.INFO)
 
 json_handler = logging.StreamHandler()
-json_formatter = jsonlogger.JsonFormatter()
+json_formatter = jsonlogger.JsonFormatter(format)
 json_handler.setFormatter(json_formatter)
 
 if fargate:
     logging.basicConfig(
-        format='%(levelname)s | %(name)s | %(message)s',
+        format=format,
         level=logging.INFO,
         handlers=[
             json_handler,
@@ -28,7 +30,7 @@ if fargate:
     )
 else:
     logging.basicConfig(
-        format='%(levelname)s | %(name)s | %(message)s',
+        format=format,
         level=logging.INFO,
         handlers=[
             RichHandler(rich_tracebacks=True),
