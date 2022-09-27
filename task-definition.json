@@ -30,7 +30,7 @@
       }
     ],
     "volumes": [],
-    "memory": "2048",
+    "memory": "4096",
     "cpu": "1024",
     "executionRoleArn": "__TASK_ROLE_ARN__",
     "family": "travel-data-pipeline",
