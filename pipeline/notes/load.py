@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from decimal import Decimal
 
 import boto3
@@ -15,6 +16,7 @@ travel_table = dynamodb.Table(DYNAMO_TABLE)
 def put_log(processed_log):
     try:
         log.info(f"Uploading trip: {processed_log['trip_name']}, day: {processed_log['day']}, to dynamodb.")
+        process_time = datetime.utcnow().isoformat()
         response = travel_table.put_item(
             Item={
                 'TripName': processed_log['trip_name'],
@@ -30,6 +32,7 @@ def put_log(processed_log):
                 'CharacterCount': processed_log['character_count'],
                 'SentenceCount': processed_log['sentence_count'],
                 'Sentiment': processed_log['sentiment'],
+                'ProccessTime': process_time,
             }
         )
     except ClientError as e:
