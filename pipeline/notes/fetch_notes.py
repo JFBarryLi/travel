@@ -45,7 +45,6 @@ def list_notes(prefix_trip_name):
 def get_latest_day(full_trip_name):
     try:
         response = table.query(
-            Limit=1,
             ScanIndexForward=False,
             KeyConditionExpression=Key('TripName').eq(full_trip_name),
         )
@@ -55,7 +54,7 @@ def get_latest_day(full_trip_name):
         log.error(f'Exception: {e}')
     else:
         if len(response['Items']) > 0:
-            return int(response['Items'][0]['Day'])
+            return int(max([r['Day'] for r in response['Items']]))
         else:
             return 0
 
