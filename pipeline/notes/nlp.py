@@ -102,7 +102,7 @@ def predict_sentiment(body):
     try:
         result = []
         paragraphs = body.split('\n\n')
-        for paragraph in paragraphs[1:]:
+        for paragraph in paragraphs:
             emotion_labels = emotion(paragraph)
             emotion_labels[0].sort(key=lambda i: i['score'], reverse=True)
             para_sentiment = emotion_labels[0][:3]
@@ -114,7 +114,6 @@ def predict_sentiment(body):
             result.append(para_sentiment)
 
         log.info(f'Successfully predicted sentiment: {result}')
-
         return result
     except Exception as e:
         log.error(f'Failed to predict sentiment from body. Exception: {e}.')

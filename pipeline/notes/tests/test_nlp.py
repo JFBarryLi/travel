@@ -1,13 +1,13 @@
 from ..nlp import process, word_count, char_count, sent_count,\
     predict_sentiment
 
-STD_BODY = 'Day1 - Monday, September 5, 2022\nNew York\n\nThis is a standard body of text. It has several sentences, and some punctuations. What am I? That was a simple question. The answer should be simple as well! I am just a body of text.'
+STD_BODY = 'This is a standard body of text. It has several sentences, and some punctuations. What am I? That was a simple question. The answer should be simple as well! I am just a body of text.'
 
 
 def test_process():
     output = process(STD_BODY)
-    assert output['word_count'] == 43
-    assert output['char_count'] == 226
+    assert output['word_count'] == 36
+    assert output['char_count'] == 183
     assert output['sent_count'] == 6
     assert output['sentiment'][0][0]['label'] == 'neutral'
     assert output['sentiment'][0][1]['label'] == 'realization'
@@ -16,12 +16,12 @@ def test_process():
 
 def test_word_count():
     count = word_count(STD_BODY)
-    assert count == 43
+    assert count == 36
 
 
 def test_char_count():
     count = char_count(STD_BODY)
-    assert count == 226
+    assert count == 183
 
 
 def test_sent_count():

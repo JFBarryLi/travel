@@ -75,7 +75,7 @@ def parse_date(txt):
 
 def parse_body(txt):
     try:
-        body = ''.join(txt.split('\n')[2:])
+        body = '\n\n'.join(txt.split('\n\n')[1:])
         return body
     except Exception as e:
         log.error(f'Failed to parse body from text. Exception: {e}')
