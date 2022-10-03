@@ -100,13 +100,18 @@ def sent_count(body):
 
 def predict_sentiment(body):
     try:
-        emotion_labels = emotion(body)
-        emotion_labels[0].sort(key=lambda i: i['score'], reverse=True)
-        result = emotion_labels[0][:3]
+        result = []
+        paragraphs = body.split('\n\n')
+        for paragraph in paragraphs[1:]:
+            emotion_labels = emotion(paragraph)
+            emotion_labels[0].sort(key=lambda i: i['score'], reverse=True)
+            para_sentiment = emotion_labels[0][:3]
 
-        for item in result:
-            item['emoji'] = EMOJI_MAP[item['label']]
-            item['score'] = Decimal(item['score'])
+            for item in para_sentiment:
+                item['emoji'] = EMOJI_MAP[item['label']]
+                item['score'] = Decimal(item['score'])
+
+            result.append(para_sentiment)
 
         log.info(f'Successfully predicted sentiment: {result}')
 
