@@ -15,5 +15,6 @@ setup(
         'boto3==1.21.32',
         'geopy==2.2.0',
         'python-json-logger==2.0.4',
+        'striprtf==0.0.21',
     ],
 )
