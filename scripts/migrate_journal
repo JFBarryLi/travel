@@ -30,7 +30,7 @@ for d in sub_dirs:
 
     with open(d + '/TXT.rtf') as f:
         rtf = f.read()
-        text = rtf_to_text(rtf)
+        text = rtf_to_text(rtf, errors='ignore')
 
     with open(dest + f'/{output_file_name}', 'w') as f:
         f.write(text)
