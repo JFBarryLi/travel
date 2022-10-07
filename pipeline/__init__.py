@@ -34,5 +34,5 @@ else:
         level=logging.INFO,
         handlers=[
             RichHandler(rich_tracebacks=True),
-            discord_handler],
+        ],
     )
