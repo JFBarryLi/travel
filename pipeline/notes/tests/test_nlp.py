@@ -9,9 +9,7 @@ def test_process():
     assert output['word_count'] == 36
     assert output['char_count'] == 183
     assert output['sent_count'] == 6
-    assert output['sentiment'][0][0]['label'] == 'neutral'
-    assert output['sentiment'][0][1]['label'] == 'realization'
-    assert output['sentiment'][0][2]['label'] == 'approval'
+    assert output['sentiment'][0]['label'] == 'neutral'
 
 
 def test_word_count():
@@ -31,6 +29,4 @@ def test_sent_count():
 
 def test_predict_sentiment():
     result = predict_sentiment(STD_BODY)
-    assert result[0][0]['label'] == 'neutral'
-    assert result[0][1]['label'] == 'realization'
-    assert result[0][2]['label'] == 'approval'
+    assert result[0]['label'] == 'neutral'

@@ -48,6 +48,7 @@ def get_table(full_trip_name):
             ScanIndexForward=False,
             KeyConditionExpression=Key('TripName').eq(full_trip_name),
         )
+        items = []
         if len(response['Items']) > 0:
             items = response['Items']
 
