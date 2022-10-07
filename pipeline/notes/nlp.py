@@ -20,7 +20,7 @@ model = TFRobertaForSequenceClassification.from_pretrained(
 emotion = pipeline(
     'sentiment-analysis',
     model='arpanghoshal/EmoRoBERTa',
-    return_all_scores=True,
+    return_all_scores=False,
 )
 
 log = logging.getLogger(__name__)
@@ -104,14 +104,14 @@ def predict_sentiment(body):
         paragraphs = body.split('\n\n')
         for paragraph in paragraphs:
             emotion_labels = emotion(paragraph)
-            emotion_labels[0].sort(key=lambda i: i['score'], reverse=True)
-            para_sentiment = emotion_labels[0][:3]
+            emotion_labels.sort(key=lambda i: i['score'], reverse=True)
+            para_sentiment = emotion_labels
 
             for item in para_sentiment:
                 item['emoji'] = EMOJI_MAP[item['label']]
                 item['score'] = Decimal(item['score'])
 
-            result.append(para_sentiment)
+            result.append(para_sentiment[0])
 
         log.info(f'Successfully predicted sentiment: {result}')
         return result
