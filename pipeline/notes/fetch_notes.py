@@ -42,21 +42,36 @@ def list_notes(prefix_trip_name):
         return notes
 
 
-def get_latest_day(full_trip_name):
+def get_table(full_trip_name):
     try:
         response = table.query(
             ScanIndexForward=False,
             KeyConditionExpression=Key('TripName').eq(full_trip_name),
         )
+        if len(response['Items']) > 0:
+            items = response['Items']
+
+        while 'LastEvaluatedKey' in response:
+            response = table.query(
+                ScanIndexForward=False,
+                KeyConditionExpression=Key('TripName').eq(full_trip_name),
+            )
+            if len(response['Items']) > 0:
+                items += response['Items']
+
     except ClientError as e:
         log.error(e.response['Error']['Message'])
     except Exception as e:
         log.error(f'Exception: {e}')
     else:
-        if len(response['Items']) > 0:
-            return int(max([r['Day'] for r in response['Items']]))
-        else:
-            return 0
+        return items
+
+
+def get_latest_day(table):
+    if len(table) > 0:
+        return int(max([r['Day'] for r in table]))
+    else:
+        return 0
 
 
 def parse_day(key):
@@ -68,8 +83,11 @@ def unprocessed_notes(objs, full_trip_name, process_all=False):
     # All notes with day greater than the day of the latest entry
     # on the dynamodb table, or with LastModified date greater than
     # the LastModified date on the latest entry are to be processed.
+    # All notes that are on s3 but not on the DyanmoDB table are to
+    # be processed.
 
-    latest_processed_day = get_latest_day(full_trip_name)
+    table = get_table(full_trip_name)
+    latest_processed_day = get_latest_day(table)
 
     try:
         if latest_processed_day > 0:
@@ -79,12 +97,15 @@ def unprocessed_notes(objs, full_trip_name, process_all=False):
         else:
             latest_processed_date = datetime.datetime(1, 1, 1)
 
+        table_days = [int(item['Day']) for item in table]
+
         unprocessed = []
         for obj in objs:
             day = parse_day(obj['Key'])
             last_modified_date = obj['LastModified']
             if day > latest_processed_day or \
                     last_modified_date > latest_processed_date or \
+                    day not in table_days or \
                     process_all:
                 unprocessed.append(obj['Key'])
 
