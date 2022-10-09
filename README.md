@@ -1,6 +1,9 @@
 ![Deploy](https://github.com/JFBarryLi/travel/actions/workflows/ci.yml/badge.svg)
 
 # Travel
+![Architecture](./diagrams/travel_data_pipeline.png)
+
+Data pipeline to process my daily travel journal.
 
 ## Setup
 Setup the following environment variables.
