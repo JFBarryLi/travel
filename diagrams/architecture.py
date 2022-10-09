@@ -11,7 +11,12 @@ from diagrams.generic.device import Mobile
 from diagrams.custom import Custom
 from diagrams.saas.chat import Discord
 
-with Diagram('Travel Data Pipeline', show=False):
+graph_attr = {
+    'fontsize': '25',
+    'bgcolor': 'transparent'
+}
+
+with Diagram('Travel Data Pipeline', show=False, graph_attr=graph_attr):
     mobile = Mobile('IOS Shortcuts')
     s3_proxy = APIGateway('S3 Proxy')
     s3 = S3('Pipeline Bucket')
