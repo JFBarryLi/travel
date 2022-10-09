@@ -82,3 +82,6 @@ Body of text.
 
 Body of text. Body of text.
 ```
+
+## License
+See [LICENSE](./LICENSE) for more information.
