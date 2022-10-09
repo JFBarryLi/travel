@@ -7,6 +7,7 @@ from diagrams.aws.integration import Eventbridge
 from diagrams.aws.compute import Fargate
 from diagrams.aws.database import Dynamodb
 from diagrams.aws.compute import ECR
+from diagrams.aws.compute import ECS
 from diagrams.generic.device import Mobile
 from diagrams.custom import Custom
 from diagrams.saas.chat import Discord
@@ -40,6 +41,8 @@ with Diagram('Travel Data Pipeline', show=False, graph_attr=graph_attr):
     github = Custom('Github Repo', './resources/github.png')
     gh_actions = Custom('Github Actions', './resources/github_actions.png')
     ecr = ECR('Container Registry')
-    github >> gh_actions >> ecr >> fargate
+    ecs = ECS('ECS')
+    gh_actions >> ecr >> fargate
+    github >> gh_actions >> ecs >> fargate
 
     mobile >> s3_proxy >> s3 >> event_bridge >> fargate >> dynamodb >> ddb_proxy
