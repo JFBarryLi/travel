@@ -13,6 +13,7 @@ from diagrams.saas.chat import Discord
 
 graph_attr = {
     'fontsize': '25',
+    'bgcolor': 'gray95',
 }
 
 with Diagram('Travel Data Pipeline', show=False, graph_attr=graph_attr):
