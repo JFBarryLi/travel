@@ -35,7 +35,7 @@ def put_log(processed_log):
                 'EndCity': processed_log['end_city'],
                 'EndState': processed_log['end_state'],
                 'EndCountry': processed_log['end_country'],
-                'EndCoutryCode': processed_log['end_country_code'],
+                'EndCountryCode': processed_log['end_country_code'],
                 'WordCount': processed_log['word_count'],
                 'CharacterCount': processed_log['character_count'],
                 'SentenceCount': processed_log['sentence_count'],
